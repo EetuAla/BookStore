@@ -32,10 +32,24 @@ public class BookController {
 		repository.save(book);
 		return "redirect:/booklist";
 	}
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteStudent(@PathVariable("id") Long id, Model model) {
-    	repository.deleteById(id);
-        return "redirect:../booklist";
-    }     
+	public String deleteStudent(@PathVariable("id") Long id, Model model) {
+		repository.deleteById(id);
+		return "redirect:/booklist";
+	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String showEditBookForm(@PathVariable("id") Long id, Model model) {
+		Book book = repository.findById(id).orElse(null);
+		model.addAttribute("book", book);
+		return "editbook";
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String updateBook(Book book) {
+		repository.save(book);
+		return "redirect:/booklist";
+	}
 
 }
